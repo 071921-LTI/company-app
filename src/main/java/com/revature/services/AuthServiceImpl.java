@@ -7,10 +7,9 @@ import com.revature.models.Employee;
 
 public class AuthServiceImpl implements AuthService {
 
-	private EmployeeDao ed = new DAOFactory().getEmployeeDao();
+	private EmployeeDao ed = DAOFactory.getDAOFactory().getEmployeeDao();
 	
 	public Employee login(String email, String password) throws AuthenticationException {
-		
 		return null;
 	}
 }
