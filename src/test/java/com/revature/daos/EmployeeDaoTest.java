@@ -31,6 +31,10 @@ public class EmployeeDaoTest {
 	
 	@BeforeAll
 	public static void init() throws SQLException {
+		/*
+		 * Mocking the ConnectionUtil class for the getConnectionFromEnv method to return
+		 * a connection to the H2 while the mock is "open".
+		 */
 		mockedConnectionUtil = Mockito.mockStatic(ConnectionUtil.class);
 		mockedConnectionUtil.when(ConnectionUtil::getConnectionFromEnv)
 				.then(I -> getH2Connection());
@@ -38,6 +42,9 @@ public class EmployeeDaoTest {
 
 	@AfterAll
 	public static void end() {
+		/*
+		 * Closing resource, mocked behavior ends.
+		 */
 		mockedConnectionUtil.close();
 	}
 
@@ -65,6 +72,9 @@ public class EmployeeDaoTest {
 
 	@Test
 	public void getByIdExists() {
+		/*
+		 * Probably should test for that the fields are the same as well
+		 */
 		assertNotNull(ed.getEmployeeById(1));
 	}
 
@@ -73,6 +83,9 @@ public class EmployeeDaoTest {
 		assertNull(ed.getEmployeeById(10));
 	}
 	
+	/*
+	 * Used to create a connection to our H2/ in memory db instead of "production" database
+	 */
 	public static Connection getH2Connection() {
 		try {
 			if (connection == null || connection.isClosed()) {
